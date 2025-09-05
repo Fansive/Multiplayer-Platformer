@@ -23,6 +23,7 @@ internal class PlayerControlSync : NetworkBehaviour {
     Animator animator;
     bool isGround;
     bool isJumpKeyDown = false;
+    int currentItemId = 1;
     private void Start() {
         playerInfo = GetComponent<PlayerInfo>();
         rb = GetComponent<Rigidbody2D>();
@@ -61,8 +62,22 @@ internal class PlayerControlSync : NetworkBehaviour {
                 hit.transform.GetComponent<Interactable>().OnInteract(playerInfo);
             }
         }
-        if(Input.GetKeyDown(KeyCode.Mouse0))
-            sword.Swing(sword.AttackInterval, (int)animator.GetFloat("Dir"));
+        if (Input.GetKeyDown(KeyCode.Mouse0)) {
+            UseCurrentItem();
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha1)) currentItemId = 1;
+        else if(Input.GetKeyDown(KeyCode.Alpha2)) currentItemId = 2;
+    }
+    void UseCurrentItem() {
+        switch (currentItemId) {
+            case 1: sword.Swing(sword.AttackInterval, (int)animator.GetFloat("Dir"));
+                break;
+            case 2: var proj = Projectile.Create(transform.position, Camp.Player, 5);
+                Vector2 dir = Util.MousePosInWorld() - transform.position;
+                proj.Launch(dir.normalized, "laser");
+                break;
+        }
+
     }
     void SetAnim() {
         float v = inputH.Value;

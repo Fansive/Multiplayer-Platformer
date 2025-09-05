@@ -82,7 +82,7 @@ internal class HotUpdater {
 
         updateList.DeleteUnnecessary();
         if(updateList.ToDownload.Count == 0) {
-            ui.CloseUI();
+            ui.FinishUpdate();
             yield break;
         }
         string fileSize = updateList.GetToDownloadSizeStr(remoteContrast);
@@ -120,7 +120,7 @@ internal class HotUpdater {
         }
         File.WriteAllText(Path.Combine(Application.persistentDataPath, ContrastFileName)
             , remoteContrastTxt);
-        ui.CloseUI();
+        ui.FinishUpdate();
     }
 
     #region Helper

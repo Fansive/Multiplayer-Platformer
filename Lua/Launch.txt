@@ -1,0 +1,7 @@
+﻿Launch = {
+    laser = function (projectile, dir)
+        projectile.Rb.velocity = dir * 8
+        projectile.Rb.gravityScale = 0
+    end,
+    
+}

@@ -60,7 +60,6 @@ internal class EnemyAISync : NetworkBehaviour {
             rb.AddForce(Vector2.up * JumpForce, ForceMode2D.Impulse);
             isJumpReady = false;
             Paltry.DelayCall.Call(0.1f, () => isJumpReady = true);
-            print("Jump");
             return true;
         }
         return false;

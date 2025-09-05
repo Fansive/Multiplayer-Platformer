@@ -45,8 +45,10 @@ internal class HotUpdateUI : MonoBehaviour {
         leftBtn.enabled = false;
         hotUpdater.DownloadUpdate();
     }
-    public void CloseUI() {
+    public void FinishUpdate() {
         gameObject.SetActive(false);
+        XLuaVM.Instance.RunLuaInit();
+        Projectile.LoadLuaLaunchTable();
     }
     /// <param name="percentage">[0,1]</param>
     public void RefreshDownloadProgress(double percentage) {

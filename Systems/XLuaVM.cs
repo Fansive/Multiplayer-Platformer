@@ -1,9 +1,11 @@
-﻿using XLua;
+﻿using Paltry;
+using XLua;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using UnityEngine;
 
 internal static class XLuaVM {
     private static LuaEnv instance;
@@ -14,6 +16,13 @@ internal static class XLuaVM {
                 instance.DoString("Dialog={Ctx={}}");
             }
             return instance;
+        }
+    }
+
+    public static void RunLuaInit(this LuaEnv instance) {
+        var ab = ABMgr.Instance.LoadAB("luainit");
+        foreach(var item in ab.LoadAllAssets<TextAsset>()) {
+            Instance.DoString(item.text);
         }
     }
     public static object GetInDialog(this LuaEnv instance, string varName) {
